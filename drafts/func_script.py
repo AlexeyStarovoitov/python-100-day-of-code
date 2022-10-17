@@ -54,6 +54,53 @@ def all_pass_type_func(a, b, *args, d, **kwargs):
     print('kwargs arguments:')
     for (key, val) in kwargs.items():
         print(f'{key}->{val}')
+        
+def concat(*args, prefix, sep='.'):
+    print(f'{prefix}{sep.join(args)}')
+    
+def oper(x,y, *, operator='+'):
+    if operator is '+':
+        return x+y 
+    elif operator is '-':
+        return x - y
+    elif operator is '*':
+        return x * y
+    elif operator is '/':
+        return x/y
+    else:
+        return None
+        
+def pos_only_func(x,y, /, z):
+    print(f'x = {x}')
+    print(f'y = {y}')
+    print(f'z = {z}')
+    
+def combine_all_args_func(a: {'desc': 'positional-only argument', 'type': 'any'}, \
+                          b: {'desc': 'positional-only argument', 'type': 'any'}, / , \
+                          c: {'desc': 'positional/keyword argument', 'type': 'any'}, *, \
+                          d: {'desc': 'keyword-only argument', 'type': 'any'}, \
+                          e: {'desc': 'keyword-only argument', 'type': 'any'}) -> \
+                          {'desc': 'haha', 'type': 'any'}:
+
+    """
+        Function combine_all_args_func:
+        
+        Combines different types of argument passing
+        
+        Developed by Alexey Starovoitov
+    """
+    print('Positional only arguments:')
+    print(f'a = {a}')
+    print(f'b= {b}')
+    print('\n')
+    
+    print('Positional arguments:')
+    print(f'c = {c}')
+    print('\n')
+    
+    print('Keyword only arguments:')
+    print(f'd = {d}')
+    print(f'e = {e}')
     
 if __name__=="__main__":
     
@@ -130,6 +177,34 @@ if __name__=="__main__":
     print('Experimenting with all arguments type passing:')
     all_pass_type_func('dfdf', 2, *['fff', 1, 'xvcxcv'], d = 45, **dict(aa=1, bb=2, cc=3))
     
-   
+    print('\n')
+    print("Experimenting with positional-only and keyword-only arguments:")
+    
+    print('Concatenating strings')
+    concat('a','b','c', prefix='..')
+    
+    x = 5
+    y = 4
+    for operator in '+-*/':
+        print('\n')
+        print(f'{x} {operator} {y} is {oper(x,y,operator=operator)}')
+    
+    
+    operator = None
+    print('\n')
+    print(f'{x} {operator} {y} is {oper(x,y,operator=operator)}')
+    
+    print('\n')
+    print('Experimenting with positional only arguments: since Python 3.8')
+    pos_only_func(1, 2, z=3)
+    
+    print('\n')
+    print('Combining all argument types:')
+    combine_all_args_func(1, 2, c = 3, d = 4, e = 5)
+    
+    print('\n')
+    print('Experimenting with docs')
+    print(combine_all_args_func.__doc__)
+    print(combine_all_args_func.__annotations__)
     
     
