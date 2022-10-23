@@ -147,6 +147,7 @@ class Generic_Class:
         
         return s
         
+        
 
 if __name__ == '__main__':
     alex = Person(
