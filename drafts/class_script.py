@@ -28,6 +28,11 @@ class Person:
         
         return age
     
+    def list_attr(self):
+        print(f'Listing {type(self)} attributes')
+        for key,val in self.__dict__.items():
+            print(f'{key} --> {val}')
+    
 
 class Person2():
     
@@ -98,6 +103,50 @@ class Numbers:
     def value(self):
         del self.x
         del self.y
+
+#Overloading
+
+class Person_overload():
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname
+    
+    def __eq__(self, other):
+        return self.name == other.name and self.surname == other.surname
+    
+    def __gt__(self, other):
+        
+        if self.surname == other.surname:
+            return self.name > other.name
+        
+        return self.surname > other.surname
+
+    def __ne__(self, other):
+        return not (self == other)
+     
+    def __le__(self,other):
+        return not (self > other)
+    
+    def __lt__(self, other):
+        return not (self > other or self == other)
+        
+    def __ge__(self, other):
+        return not (self < other)
+        
+#Exercise 6
+
+class Generic_Class:
+    def __init__(self, **kwargs):
+        for key,value in kwargs.items():
+            setattr(self, key, value)
+    
+    def __str__(self):
+        s = ""
+        for key, val in self.__dict__.items():
+            s += f'{key} --> {str(val)}\n'
+        
+        return s
+        
 
 if __name__ == '__main__':
     alex = Person(
@@ -186,6 +235,14 @@ if __name__ == '__main__':
     print(f'Does the number instance have x attr?:\n{hasattr(number, "x")}')
     print(f'Does the number instance have y attr?:\n{hasattr(number, "y")}')
     
+    print('\nExercise 5')
+    print(f'dir(alex):\n{dir(alex)}')
+    print(f'type(alex): {type(alex)}')
+    print(f'type(Person): {type(Person)}')
+    alex.list_attr()
     
+    print('\nExercise 6')
+    gen_obj = Generic_Class(name = 'ha', surname = 'haha', birthdate = datetime.date(year = 1996, month = 10, day = 9))
+    print(str(gen_obj))
         
         
